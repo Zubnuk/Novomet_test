@@ -1,5 +1,5 @@
 <?php
-$host = 'MySQL-5.7'; // вместо 127.0.0.1
+$host = 'MySQL-5.7'; 
 $db   = 'transport_system';
 $user = 'root';
 $pass = '';
