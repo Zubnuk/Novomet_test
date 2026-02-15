@@ -6,18 +6,23 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit('Method Not Allowed');
 }
 
-$name = trim($_POST['name'] ?? '');
+$routeId = $_POST['route_id'] ?? null;
+$stopId = $_POST['stop_id'] ?? null;
+$stopOrder = $_POST['stop_order'] ?? null;
 
-if ($name === '') {
-    exit('Название обязательно');
+if (!$routeId || !$stopId || !$stopOrder) {
+    exit('Все поля обязательны');
 }
 
-$sql = "INSERT INTO transport_type (name) VALUES (:name)";
+$sql = "INSERT INTO route_stop (route_id, stop_id, stop_order)
+        VALUES (:route_id, :stop_id, :stop_order)";
 
 try {
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
-        ':name' => $name
+        ':route_id' => $routeId,
+        ':stop_id' => $stopId,
+        ':stop_order' => $stopOrder
     ]);
 
     echo 'Сохранено';

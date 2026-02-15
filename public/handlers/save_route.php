@@ -12,7 +12,7 @@ if ($route_number === '') {
     exit('Название обязательно');
 }
 
-$sql = "INSERT INTO transport_type (route_number) VALUES (:route_number)";
+$sql = "INSERT INTO route (route_number) VALUES (:route_number)";
 
 try {
     $stmt = $pdo->prepare($sql);
