@@ -1,23 +1,23 @@
 <?php
-require_once __DIR__ . '/../../app/config/db.php';
+require_once __DIR__ . '/../../../app/config/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     exit('Method Not Allowed');
 }
 
-$full_name = trim($_POST['full_name'] ?? '');
+$route_number = trim($_POST['route_number'] ?? '');
 
-if ($full_name === '') {
+if ($route_number === '') {
     exit('Название обязательно');
 }
 
-$sql = "INSERT INTO driver (full_name) VALUES (:full_name)";
+$sql = "INSERT INTO route (route_number) VALUES (:route_number)";
 
 try {
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
-        ':full_name' => $full_name
+        ':route_number' => $route_number
     ]);
 
     echo 'Сохранено';
