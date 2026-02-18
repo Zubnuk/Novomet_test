@@ -1,6 +1,10 @@
 <?php
-require_once __DIR__ . '/../app/config/db.php';
 
+require_once __DIR__ . '/../app/models/TransportCondition.php';
+require_once __DIR__ . '/../app/config/db.php';
+require_once __DIR__ . '/partials/header.php';
+
+use App\Models\TransportCondition;
 
 $types = $pdo->query("
     SELECT type_id, name 
@@ -27,20 +31,14 @@ $stops = $pdo->query("
 ")->fetchAll();
 ?>
 
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Транспортная система</title>
-</head>
-<body>
+
 
 <h1>Справочники транспортной системы</h1>
 
 <hr>
 
 <h2>Добавить тип транспорта</h2>
-<form action="/handlers/save_type.php" method="post">
+<form action="/handlers/save/save_type.php" method="post">
     <input type="text" name="name" required minlength="3">
     <button type="submit">Сохранить</button>
 </form>
@@ -48,7 +46,7 @@ $stops = $pdo->query("
 <hr>
 
 <h2>Добавить водителя</h2>
-<form action="/handlers/save_driver.php" method="post">
+<form action="/handlers/save/save_driver.php" method="post">
     <input type="text" name="full_name" required minlength="5">
     <button type="submit">Сохранить</button>
 </form>
@@ -56,7 +54,7 @@ $stops = $pdo->query("
 <hr>
 
 <h2>Добавить остановку</h2>
-<form action="/handlers/save_stop.php" method="post">
+<form action="/handlers/save/save_stop.php" method="post">
     <input type="text" name="name" placeholder="Название" required>
 
     <input type="number" name="latitude" step="0.000001" placeholder="Широта" required>
@@ -68,7 +66,7 @@ $stops = $pdo->query("
 <hr>
 
 <h2>Добавить маршрут</h2>
-<form action="/handlers/save_route.php" method="post">
+<form action="/handlers/save/save_route.php" method="post">
     <input type="text" name="route_number" required>
     <button type="submit">Сохранить</button>
 </form>
@@ -76,7 +74,7 @@ $stops = $pdo->query("
 <hr>
 
 <h2>Добавить остановку в маршрут</h2>
-<form action="/handlers/save_route_stop.php" method="post">
+<form action="/handlers/save/save_route_stop.php" method="post">
 
     <label>Маршрут:</label>
     <select name="route_id" required>
@@ -106,7 +104,7 @@ $stops = $pdo->query("
 <hr>
 
 <h2>Добавить транспорт</h2>
-<form action="/handlers/save_transport.php" method="post">
+<form action="/handlers/save/save_transport.php" method="post">
 
     <label>Тип транспорта:</label>
     <select name="type_id" required>
@@ -129,10 +127,13 @@ $stops = $pdo->query("
 
     <label>Состояние:</label>
     <select name="condition" required>
-        <option value="исправен">Исправен</option>
-        <option value="в ремонте">В ремонте</option>
-        <option value="списан">Списан</option>
+    <?php foreach (TransportCondition::LIST as $value => $label): ?>
+        <option value="<?= htmlspecialchars($value) ?>">
+            <?= htmlspecialchars($label) ?>
+        </option>
+    <?php endforeach; ?>
     </select>
+
 
     <label>Описание:</label>
     <textarea name="description"></textarea>
