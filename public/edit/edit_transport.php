@@ -1,5 +1,8 @@
 <?php
 require_once __DIR__ . '/../../app/config/db.php';
+require_once __DIR__ . '/../../app/models/TransportCondition.php';
+
+use App\Models\TransportCondition;
 
 $id = $_GET['id'] ?? null;
 if (!$id) exit('ID не указан');
@@ -42,6 +45,15 @@ require_once __DIR__ . '/../partials/header.php';
     <input type="number" name="year"
            value="<?= $transport['year'] ?>">
 
+    <select name="condition" required>
+        <?php foreach (TransportCondition::LIST as $value => $label): ?>
+            <option value="<?= htmlspecialchars($value) ?>"
+                <?= $transport['condition'] === $value ? 'selected' : '' ?>>
+                <?= htmlspecialchars($label) ?>
+            </option>
+    <?php endforeach; ?>
+    </select>
+        
     <select name="driver_id" required>
         <?php foreach ($drivers as $driver): ?>
             <option value="<?= $driver['driver_id'] ?>"
