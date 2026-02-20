@@ -16,7 +16,7 @@ app/
 ├── models/
 │   └── TransportCondition.php
 │
-├── database/
+database/
 │   └── schema.sql
 │
 public/
