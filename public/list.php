@@ -26,7 +26,7 @@ $transports = $pdo->query("
     ORDER BY t.transport_id DESC
 ")->fetchAll();
 ?>
-
+<link rel="stylesheet" href="css/main.css">
 <h2>Типы транспорта</h2>
 <table border="1" cellpadding="5">
 <tr>

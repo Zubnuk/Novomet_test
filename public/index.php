@@ -6,6 +6,7 @@ require_once __DIR__ . '/partials/header.php';
 
 use App\Models\TransportCondition;
 
+
 $types = $pdo->query("
     SELECT type_id, name 
     FROM transport_type 
@@ -36,7 +37,7 @@ $stops = $pdo->query("
 <h1>Справочники транспортной системы</h1>
 
 <hr>
-
+<link rel="stylesheet" href="css/main.css">
 <h2>Добавить тип транспорта</h2>
 <form action="/handlers/save/save_type.php" method="post">
     <input type="text" name="name" required minlength="3">
