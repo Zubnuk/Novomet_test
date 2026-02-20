@@ -25,6 +25,18 @@ $transports = $pdo->query("
     JOIN driver d ON t.driver_id = d.driver_id
     ORDER BY t.transport_id DESC
 ")->fetchAll();
+
+$routeStops = $pdo->query("
+    SELECT rs.route_id,
+           rs.stop_id,
+           rs.stop_order,
+           r.route_number,
+           s.name AS stop_name
+    FROM route_stop rs
+    JOIN route r ON rs.route_id = r.route_id
+    JOIN stop s ON rs.stop_id = s.stop_id
+    ORDER BY r.route_number, rs.stop_order
+")->fetchAll();
 ?>
 <link rel="stylesheet" href="css/main.css">
 <h2>Типы транспорта</h2>
@@ -174,18 +186,6 @@ $transports = $pdo->query("
 </tr>
 
 <?php
-$routeStops = $pdo->query("
-    SELECT rs.route_id,
-           rs.stop_id,
-           rs.stop_order,
-           r.route_number,
-           s.name AS stop_name
-    FROM route_stop rs
-    JOIN route r ON rs.route_id = r.route_id
-    JOIN stop s ON rs.stop_id = s.stop_id
-    ORDER BY r.route_number, rs.stop_order
-")->fetchAll();
-
 foreach ($routeStops as $rs):
 ?>
 <tr>
