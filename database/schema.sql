@@ -65,13 +65,16 @@ CREATE TABLE transport (
 
     CONSTRAINT fk_transport_type
         FOREIGN KEY (type_id)
-        REFERENCES transport_type(type_id),
+        REFERENCES transport_type(type_id)
+        ON DELETE CASCADE,
 
     CONSTRAINT fk_transport_route
         FOREIGN KEY (route_id)
-        REFERENCES route(route_id),
+        REFERENCES route(route_id)
+        ON DELETE CASCADE,
 
     CONSTRAINT fk_transport_driver
         FOREIGN KEY (driver_id)
         REFERENCES driver(driver_id)
+        ON DELETE CASCADE
 );
