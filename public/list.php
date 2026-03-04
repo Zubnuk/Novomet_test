@@ -5,10 +5,29 @@ $pageTitle = 'Просмотр данных';
 require_once __DIR__ . '/partials/header.php';
 
 
-$types = $pdo->query("SELECT * FROM transport_type ORDER BY name")->fetchAll();
-$drivers = $pdo->query("SELECT * FROM driver ORDER BY full_name")->fetchAll();
-$routes = $pdo->query("SELECT * FROM route ORDER BY route_number")->fetchAll();
-$stops = $pdo->query("SELECT * FROM stop ORDER BY name")->fetchAll();
+$types = $pdo->query("
+    SELECT type_id, name 
+    FROM transport_type 
+    ORDER BY name
+")->fetchAll();
+
+$drivers = $pdo->query("
+    SELECT driver_id, full_name 
+    FROM driver 
+    ORDER BY full_name
+")->fetchAll();
+
+$routes = $pdo->query("
+    SELECT route_id, route_number 
+    FROM route 
+    ORDER BY route_number
+")->fetchAll();
+
+$stops = $pdo->query("
+    SELECT stop_id, name 
+    FROM stop 
+    ORDER BY name
+")->fetchAll();
 
 $transports = $pdo->query("
     SELECT t.transport_id,
@@ -51,7 +70,7 @@ $routeStops = $pdo->query("
     <td><?= $type['type_id'] ?></td>
     <td><?= htmlspecialchars($type['name']) ?></td>
     <td>
-        <form action="/handlers/delete/delete_type.php" method="post" style="display:inline;">
+        <form class="delete-form" action="/handlers/delete/delete_type.php" method="post" style="display:inline;">
             <input type="hidden" name="type_id" value="<?= $type['type_id'] ?>">
             <button type="submit">Удалить</button>
         </form>
@@ -76,7 +95,7 @@ $routeStops = $pdo->query("
     <td><?= $driver['driver_id'] ?></td>
     <td><?= htmlspecialchars($driver['full_name']) ?></td>
     <td>
-        <form action="/handlers/delete/delete_driver.php" method="post" style="display:inline;">
+        <form class="delete-form" action="/handlers/delete/delete_driver.php" method="post" style="display:inline;">
             <input type="hidden" name="driver_id" value="<?= $driver['driver_id'] ?>">
             <button type="submit">Удалить</button>
         </form>
@@ -101,7 +120,7 @@ $routeStops = $pdo->query("
     <td><?= $route['route_id'] ?></td>
     <td><?= htmlspecialchars($route['route_number']) ?></td>
     <td>
-        <form action="/handlers/delete/delete_route.php" method="post" style="display:inline;">
+        <form class="delete-form" action="/handlers/delete/delete_route.php" method="post" style="display:inline;">
             <input type="hidden" name="route_id" value="<?= $route['route_id'] ?>">
             <button type="submit">Удалить</button>
         </form>
@@ -126,9 +145,9 @@ $routeStops = $pdo->query("
 <tr>
     <td><?= $stop['stop_id'] ?></td>
     <td><?= htmlspecialchars($stop['name']) ?></td>
-    <td><?= $stop['latitude'] ?> / <?= $stop['longitude'] ?></td>
+    <td><?php echo (string)$stop['latitude'] ?> / <?= (string)$stop['longitude'] ?></td>
     <td>
-        <form action="/handlers/delete/delete_stop.php" method="post" style="display:inline;">
+        <form class="delete-form" action="/handlers/delete/delete_stop.php" method="post" style="display:inline;">
             <input type="hidden" name="stop_id" value="<?= $stop['stop_id'] ?>">
             <button type="submit">Удалить</button>
         </form>
@@ -165,7 +184,7 @@ $routeStops = $pdo->query("
     <td><?= htmlspecialchars($transport['route_number']) ?></td>
     <td><?= htmlspecialchars($transport['full_name']) ?></td>
     <td>
-        <form action="/handlers/delete/delete_transport.php" method="post" style="display:inline;">
+        <form class="delete-form" action="/handlers/delete/delete_transport.php" method="post" style="display:inline;">
             <input type="hidden" name="transport_id" value="<?= $transport['transport_id'] ?>">
             <button type="submit">Удалить</button>
         </form>
@@ -193,7 +212,7 @@ foreach ($routeStops as $rs):
     <td><?= htmlspecialchars($rs['stop_name']) ?></td>
     <td><?= $rs['stop_order'] ?></td>
     <td>
-        <form action="/handlers/delete/delete_route_stop.php" method="post" style="display:inline;">
+        <form class="delete-form" action="/handlers/delete/delete_route_stop.php" method="post" style="display:inline;">
             <input type="hidden" name="route_id" value="<?= $rs['route_id'] ?>">
             <input type="hidden" name="stop_id" value="<?= $rs['stop_id'] ?>">
             <button type="submit">Удалить</button>
@@ -206,5 +225,5 @@ foreach ($routeStops as $rs):
 </tr>
 <?php endforeach; ?>
 </table>
-
+<script src="js/list.js"></script>
 <hr>
