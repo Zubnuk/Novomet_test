@@ -10,7 +10,7 @@ $options = [
 
 try {
     $pdo = new PDO($dsn, $dbConfig['user'], $dbConfig['pass'], $options);
-    echo "Соединение установлено";
+    
 } catch (PDOException $e) {
     die("Ошибка подключения: " . $e->getMessage());
 }
