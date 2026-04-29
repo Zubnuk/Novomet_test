@@ -1,11 +1,7 @@
 <?php
-$host = 'MySQL-5.7'; 
-$db   = 'transport_system';
-$user = 'root';
-$pass = '';
-$charset = 'utf8mb4';
+$dbConfig = require __DIR__ . '/db_config.php';
 
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+$dsn = "mysql:host={$dbConfig['host']};dbname={$dbConfig['db']};charset={$dbConfig['charset']}";
 
 $options = [
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
@@ -13,7 +9,7 @@ $options = [
 ];
 
 try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
+    $pdo = new PDO($dsn, $dbConfig['user'], $dbConfig['pass'], $options);
     echo "Соединение установлено";
 } catch (PDOException $e) {
     die("Ошибка подключения: " . $e->getMessage());
