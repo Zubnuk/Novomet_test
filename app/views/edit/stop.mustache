@@ -1,0 +1,52 @@
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-success">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Редактировать остановку</h5>
+            </div>
+            <div class="card-body p-4">
+                <form action="/handlers/update/update_stop.php" method="post">
+                    <input type="hidden" name="stop_id" value="{{stop_id}}">
+
+                    <div class="mb-3">
+                        <label for="name" class="form-label fw-bold">Название остановки</label>
+                        <input type="text" 
+                               id="name" 
+                               name="name" 
+                               class="form-control" 
+                               value="{{name}}" 
+                               required>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label for="latitude" class="form-label fw-bold">Широта</label>
+                            <input type="number" 
+                                   id="latitude" 
+                                   name="latitude" 
+                                   class="form-control" 
+                                   step="0.000001" 
+                                   value="{{latitude}}" 
+                                   required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="longitude" class="form-label fw-bold">Долгота</label>
+                            <input type="number" 
+                                   id="longitude" 
+                                   name="longitude" 
+                                   class="form-control" 
+                                   step="0.000001" 
+                                   value="{{longitude}}" 
+                                   required>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="/list.php" class="btn btn-outline-secondary">Отмена</a>
+                        <button type="submit" class="btn btn-success px-4">Сохранить изменения</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

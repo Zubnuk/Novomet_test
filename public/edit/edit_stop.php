@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../../app/config/db.php';
+require_once __DIR__ . '/../../app/Render.php';
 
 $id = $_GET['id'] ?? null;
 if (!$id) exit('ID не указан');
@@ -10,30 +11,14 @@ $stop = $stmt->fetch();
 
 if (!$stop) exit('Остановка не найдена');
 
-$pageTitle = 'Редактировать остановку';
-require_once __DIR__ . '/../partials/header.php';
-?>
+$renderer = new Render();
 
-<h2>Редактировать остановку</h2>
+$data = [
+    'page_title' => 'Редактировать остановку',
+    'stop_id'    => $stop['stop_id'],
+    'name'       => $stop['name'],
+    'latitude'   => $stop['latitude'],
+    'longitude'  => $stop['longitude']
+];
 
-<form action="/handlers/update/update_stop.php" method="post">
-    <input type="hidden" name="stop_id" value="<?= $stop['stop_id'] ?>">
-
-    <input type="text" name="name"
-           value="<?= htmlspecialchars($stop['name']) ?>"
-           required>
-
-    <input type="number" step="0.000001"
-           name="latitude"
-           value="<?= $stop['latitude'] ?>"
-           required>
-
-    <input type="number" step="0.000001"
-           name="longitude"
-           value="<?= $stop['longitude'] ?>"
-           required>
-
-    <button type="submit">Сохранить</button>
-</form>
-
-
+echo $renderer->renderPage('edit/stop', $data);
