@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../../app/config/db.php';
+require_once __DIR__ . '/../../app/Render.php';
 
 $id = $_GET['id'] ?? null;
 
@@ -15,20 +16,12 @@ if (!$type) {
     exit('Тип не найден');
 }
 
-$pageTitle = 'Редактировать тип';
-require_once __DIR__ . '/../partials/header.php';
-?>
+$renderer = new Render();
 
-<h2>Редактировать тип транспорта</h2>
+$data = [
+    'page_title' => 'Редактировать тип транспорта',
+    'type_id'    => $type['type_id'],
+    'name'       => $type['name']
+];
 
-<form action="/handlers/update/update_type.php" method="post">
-    <input type="hidden" name="type_id" value="<?= $type['type_id'] ?>">
-
-    <input type="text"
-           name="name"
-           value="<?= htmlspecialchars($type['name']) ?>"
-           required>
-
-    <button type="submit">Сохранить</button>
-</form>
-
+echo $renderer->renderPage('edit/type', $data);
