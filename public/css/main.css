@@ -3,3 +3,8 @@ body{
     text-align: left;
     font-size: 1.2em;
 }
+.invalid {
+    border: 2px solid red !important;
+    outline: none;
+    background-color: #fff0f0;
+}
