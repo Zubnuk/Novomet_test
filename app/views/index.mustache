@@ -1,0 +1,147 @@
+<div class="container pb-5">
+    <h1 class="mb-4 text-center">Управление справочниками</h1>
+
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-secondary text-white">Добавить тип транспорта</div>
+                <div class="card-body">
+                    <form action="/handlers/save/save_type.php" method="post" class="d-flex gap-2">
+                        <input type="text" name="name" class="form-control" placeholder="Название (Трамвай, Автобус...)" required>
+                        <button type="submit" class="btn btn-success">OK</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-secondary text-white">Добавить водителя</div>
+                <div class="card-body">
+                    <form action="/handlers/save/save_driver.php" method="post" class="d-flex gap-2">
+                        <input type="text" name="full_name" class="form-control" placeholder="ФИО водителя" required minlength="5">
+                        <button type="submit" class="btn btn-success">OK</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-secondary text-white">Добавить остановку</div>
+                <div class="card-body">
+                    <form action="/handlers/save/save_stop.php" method="post" class="row g-2">
+                        <div class="col-12">
+                            <input type="text" name="name" class="form-control" placeholder="Название остановки" required>
+                        </div>
+                        <div class="col-6">
+                            <input type="number" name="latitude" class="form-control" step="0.000001" placeholder="Широта" required>
+                        </div>
+                        <div class="col-6">
+                            <input type="number" name="longitude" class="form-control" step="0.000001" placeholder="Долгота" required>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-success w-100">Сохранить остановку</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-secondary text-white">Добавить маршрут</div>
+                <div class="card-body">
+                    <form action="/handlers/save/save_route.php" method="post" class="d-flex gap-2">
+                        <input type="text" name="route_number" class="form-control" placeholder="Номер маршрута (напр. 10А)" required>
+                        <button type="submit" class="btn btn-success">OK</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="card shadow-sm border-info">
+                <div class="card-header bg-info text-dark fw-bold">Добавить остановку в маршрут (Связь)</div>
+                <div class="card-body">
+                    <form action="/handlers/save/save_route_stop.php" method="post" class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Маршрут</label>
+                            <select name="route_id" class="form-select" required>
+                                <option value="">-- выберите --</option>
+                                {{#routes}}
+                                <option value="{{route_id}}">{{route_number}}</option>
+                                {{/routes}}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Остановка</label>
+                            <select name="stop_id" class="form-select" required>
+                                <option value="">-- выберите --</option>
+                                {{#stops}}
+                                <option value="{{stop_id}}">{{name}}</option>
+                                {{/stops}}
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Порядок</label>
+                            <input type="number" name="stop_order" class="form-control" min="1" required>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary w-100">Связать</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="card shadow-sm border-primary">
+                <div class="card-header bg-primary text-white fw-bold">Добавить транспортное средство</div>
+                <div class="card-body">
+                    <form action="/handlers/save/save_transport.php" method="post" class="row g-3">
+                        <div class="col-md-3">
+                            <label class="form-label">Тип</label>
+                            <select name="type_id" class="form-select" required>
+                                {{#types}}<option value="{{type_id}}">{{name}}</option>{{/types}}
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Госномер</label>
+                            <input type="text" name="plate_number" class="form-control" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Модель</label>
+                            <input type="text" name="model" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Год</label>
+                            <input type="number" name="year" class="form-control" min="1950" max="2100" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Состояние</label>
+                            <select name="condition" class="form-select" required>
+                                {{#conditions}}<option value="{{value}}">{{label}}</option>{{/conditions}}
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Водитель</label>
+                            <select name="driver_id" class="form-select" required>
+                                {{#drivers}}<option value="{{driver_id}}">{{full_name}}</option>{{/drivers}}
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Маршрут</label>
+                            <select name="route_id" class="form-select" required>
+                                {{#routes}}<option value="{{route_id}}">{{route_number}}</option>{{/routes}}
+                            </select>
+                        </div>
+                        <div class="col-md-3 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary w-100">💾 Сохранить всё</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
