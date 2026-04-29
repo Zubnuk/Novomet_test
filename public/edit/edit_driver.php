@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../../app/config/db.php';
+require_once __DIR__ . '/../../app/Render.php';
 
 $id = $_GET['id'] ?? null;
 if (!$id) exit('ID не указан');
@@ -10,20 +11,12 @@ $driver = $stmt->fetch();
 
 if (!$driver) exit('Водитель не найден');
 
-$pageTitle = 'Редактировать водителя';
-require_once __DIR__ . '/../partials/header.php';
-?>
+$renderer = new Render();
 
-<h2>Редактировать водителя</h2>
+$data = [
+    'page_title' => 'Редактировать водителя',
+    'driver_id'  => $driver['driver_id'],
+    'full_name'  => $driver['full_name']
+];
 
-<form action="/handlers/update/update_driver.php" method="post">
-    <input type="hidden" name="driver_id" value="<?= $driver['driver_id'] ?>">
-
-    <input type="text"
-           name="full_name"
-           value="<?= htmlspecialchars($driver['full_name']) ?>"
-           required>
-
-    <button type="submit">Сохранить</button>
-</form>
-
+echo $renderer->renderPage('edit/driver', $data);
