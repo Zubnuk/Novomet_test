@@ -1,0 +1,37 @@
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow-sm border-info">
+            <div class="card-header bg-info text-dark fw-bold">
+                Изменить порядок на маршруте
+            </div>
+            <div class="card-body">
+                <form action="/handlers/update/update_route_stop.php" method="post">
+                    <input type="hidden" name="route_id" value="{{route_id}}">
+                    <input type="hidden" name="stop_id" value="{{stop_id}}">
+
+                    <div class="mb-4">
+                        <label for="stop_order" class="form-label">Порядковый номер остановки</label>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text">#</span>
+                            <input type="number" 
+                                   id="stop_order" 
+                                   name="stop_order" 
+                                   class="form-control" 
+                                   value="{{stop_order}}" 
+                                   min="1" 
+                                   required>
+                        </div>
+                        <div class="form-text mt-2">
+                            Укажите номер, определяющий последовательность этой остановки в маршруте.
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-between">
+                        <a href="/list.php" class="btn btn-outline-secondary">Назад к списку</a>
+                        <button type="submit" class="btn btn-info px-4">Обновить порядок</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -25,7 +25,8 @@ try {
         ':stop_order' => $stopOrder
     ]);
 
-    echo 'Сохранено';
+    header("Location: /index.php?success=updated");
+    exit;
 } catch (PDOException $e) {
     echo 'Ошибка: ' . $e->getMessage();
 }

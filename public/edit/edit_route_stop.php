@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../../app/config/db.php';
+require_once __DIR__ . '/../../app/Render.php';
 
 $routeId = $_GET['route_id'] ?? null;
 $stopId  = $_GET['stop_id'] ?? null;
@@ -7,8 +8,8 @@ $stopId  = $_GET['stop_id'] ?? null;
 if (!$routeId || !$stopId) exit('Некорректные данные');
 
 $stmt = $pdo->prepare("
-    SELECT * FROM route_stop
-    WHERE route_id = :route_id
+    SELECT * FROM route_stop 
+    WHERE route_id = :route_id 
     AND stop_id = :stop_id
 ");
 $stmt->execute([
@@ -19,22 +20,13 @@ $stmt->execute([
 $rs = $stmt->fetch();
 if (!$rs) exit('Связь не найдена');
 
-$pageTitle = 'Редактировать порядок';
-require_once __DIR__ . '/../partials/header.php';
-?>
+$renderer = new Render();
 
-<h2>Изменить порядок остановки</h2>
+$data = [
+    'page_title' => 'Изменить порядок остановки',
+    'route_id'   => $routeId,
+    'stop_id'    => $stopId,
+    'stop_order' => $rs['stop_order']
+];
 
-<form action="/handlers/update/update_route_stop.php" method="post">
-    <input type="hidden" name="route_id" value="<?= $routeId ?>">
-    <input type="hidden" name="stop_id" value="<?= $stopId ?>">
-
-    <input type="number"
-           name="stop_order"
-           value="<?= $rs['stop_order'] ?>"
-           required>
-
-    <button type="submit">Сохранить</button>
-</form>
-
-
+echo $renderer->renderPage('edit/route_stop', $data);
