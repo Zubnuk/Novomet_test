@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!confirmed) {
                
                 event.preventDefault();
+                return;
             }
         });
     });

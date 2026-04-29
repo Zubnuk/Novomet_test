@@ -1,0 +1,135 @@
+<div class="container-fluid pb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>🚍 Система управления перевозками</h1>
+        <a href="index.php" class="btn btn-primary shadow-sm">+ Добавить запись</a>
+    </div>
+
+    <div class="card shadow-sm mb-5">
+        <div class="card-header bg-primary text-white fw-bold">Список транспорта</div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Госномер</th>
+                        <th>Тип / Модель</th>
+                        <th>Год</th>
+                        <th>Состояние</th>
+                        <th>Маршрут</th>
+                        <th>Водитель</th>
+                        <th class="text-end px-4">Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#transports}}
+                    <tr>
+                        <td>{{transport_id}}</td>
+                        <td><span class="badge bg-dark">{{plate_number}}</span></td>
+                        <td><strong>{{type_name}}</strong> <small class="text-muted">{{model}}</small></td>
+                        <td>{{year}}</td>
+                        <td><span class="badge bg-info text-dark">{{condition}}</span></td>
+                        <td>№{{route_number}}</td>
+                        <td>{{full_name}}</td>
+                        <td class="text-end px-4">
+                            <a href="/edit/edit_transport.php?id={{transport_id}}" 
+                               class="btn btn-sm btn-outline-warning me-1" 
+                               title="Редактировать">✏️</a>
+                            
+                            <form action="/handlers/delete/delete_transport.php" method="post" class="d-inline delete-form">
+                                <input type="hidden" name="transport_id" value="{{transport_id}}">
+                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Удалить">🗑️</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {{/transports}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-secondary text-white">Типы транспорта</div>
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover align-middle mb-0">
+                        <tbody>
+                            {{#types}}
+                            <tr>
+                                <td class="px-3">{{name}}</td>
+                                <td class="text-end px-3">
+                                    <a href="/edit/edit_type.php?id={{type_id}}" class="btn btn-link btn-sm text-warning p-0 me-2">✏️</a>
+                                    <form action="/handlers/delete/delete_type.php" method="post" class="d-inline delete-form">
+                                        <input type="hidden" name="type_id" value="{{type_id}}">
+                                        <button type="submit" class="btn btn-link btn-sm p-0 text-danger">🗑️</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {{/types}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-secondary text-white">Водители</div>
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover align-middle mb-0">
+                        <tbody>
+                            {{#drivers}}
+                            <tr>
+                                <td class="px-3">{{full_name}}</td>
+                                <td class="text-end px-3">
+                                    <a href="/edit/edit_driver.php?id={{driver_id}}" class="btn btn-link btn-sm text-warning p-0 me-2">✏️</a>
+                                    <form action="/handlers/delete/delete_driver.php" method="post" class="d-inline delete-form">
+                                        <input type="hidden" name="driver_id" value="{{driver_id}}">
+                                        <button type="submit" class="btn btn-link btn-sm p-0 text-danger">🗑️</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {{/drivers}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4 border-info">
+        <div class="card-header bg-info text-dark fw-bold">📍 Остановки на маршрутах</div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="px-3">Маршрут</th>
+                        <th>Остановка</th>
+                        <th>Порядок</th>
+                        <th class="text-end px-4">Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#route_stops}}
+                    <tr>
+                        <td class="px-3"><strong>{{route_number}}</strong></td>
+                        <td>{{stop_name}}</td>
+                        <td><span class="badge rounded-pill bg-light text-dark border">{{stop_order}}</span></td>
+                        <td class="text-end px-4">
+                            <a href="/edit/edit_route_stop.php?route_id={{route_id}}&stop_id={{stop_id}}" 
+                               class="btn btn-link btn-sm text-warning p-0 me-2">✏️</a>
+                            <form action="/handlers/delete/delete_route_stop.php" method="post" class="d-inline delete-form">
+                                <input type="hidden" name="route_id" value="{{route_id}}">
+                                <input type="hidden" name="stop_id" value="{{stop_id}}">
+                                <button type="submit" class="btn btn-link btn-sm p-0 text-danger">🗑️</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {{/route_stops}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="js/list.js"></script>
