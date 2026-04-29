@@ -1,0 +1,76 @@
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm border-primary">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Редактирование транспортного средства</h5>
+                <span class="badge bg-light text-dark">ID: {{transport.transport_id}}</span>
+            </div>
+            <div class="card-body p-4">
+                <form action="/handlers/update/update_transport.php" method="post" class="row g-3">
+                    <input type="hidden" name="transport_id" value="{{transport.transport_id}}">
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Тип транспорта</label>
+                        <select name="type_id" class="form-select" required>
+                            {{#types}}
+                            <option value="{{type_id}}" {{#is_selected}}selected{{/is_selected}}>{{name}}</option>
+                            {{/types}}
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Госномер</label>
+                        <input type="text" name="plate_number" class="form-control" value="{{transport.plate_number}}" required>
+                    </div>
+
+                    <div class="col-md-8">
+                        <label class="form-label fw-bold">Модель</label>
+                        <input type="text" name="model" class="form-control" value="{{transport.model}}">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Год выпуска</label>
+                        <input type="number" name="year" class="form-control" value="{{transport.year}}">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Состояние</label>
+                        <select name="condition" class="form-select" required>
+                            {{#conditions}}
+                            <option value="{{value}}" {{#is_selected}}selected{{/is_selected}}>{{label}}</option>
+                            {{/conditions}}
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Водитель</label>
+                        <select name="driver_id" class="form-select" required>
+                            {{#drivers}}
+                            <option value="{{driver_id}}" {{#is_selected}}selected{{/is_selected}}>{{full_name}}</option>
+                            {{/drivers}}
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Маршрут</label>
+                        <select name="route_id" class="form-select" required>
+                            {{#routes}}
+                            <option value="{{route_id}}" {{#is_selected}}selected{{/is_selected}}>{{route_number}}</option>
+                            {{/routes}}
+                        </select>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label fw-bold">Дополнительное описание</label>
+                        <textarea name="description" class="form-control" rows="3">{{transport.description}}</textarea>
+                    </div>
+
+                    <div class="col-12 d-flex justify-content-between mt-4">
+                        <a href="/list.php" class="btn btn-outline-secondary px-4">Отмена</a>
+                        <button type="submit" class="btn btn-primary px-5 shadow">Сохранить изменения</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
