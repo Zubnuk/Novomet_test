@@ -24,7 +24,8 @@ try {
         ':route_number' => $routeNumber
     ]);
 
-    echo 'Обновлено';
+    header("Location: /list.php?success=updated");
+    exit;
 } catch (PDOException $e) {
     echo 'Ошибка: ' . $e->getMessage();
 }

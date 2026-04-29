@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../../app/config/db.php';
+require_once __DIR__ . '/../../app/Render.php';
 
 $id = $_GET['id'] ?? null;
 if (!$id) exit('ID не указан');
@@ -10,20 +11,12 @@ $route = $stmt->fetch();
 
 if (!$route) exit('Маршрут не найден');
 
-$pageTitle = 'Редактировать маршрут';
-require_once __DIR__ . '/../partials/header.php';
-?>
+$renderer = new Render();
 
-<h2>Редактировать маршрут</h2>
+$data = [
+    'page_title'   => 'Редактировать маршрут',
+    'route_id'     => $route['route_id'],
+    'route_number' => $route['route_number']
+];
 
-<form action="/handlers/update/update_route.php" method="post">
-    <input type="hidden" name="route_id" value="<?= $route['route_id'] ?>">
-
-    <input type="text"
-           name="route_number"
-           value="<?= htmlspecialchars($route['route_number']) ?>"
-           required>
-
-    <button type="submit">Сохранить</button>
-</form>
-
+echo $renderer->renderPage('edit/route', $data);
