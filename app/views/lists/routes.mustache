@@ -1,0 +1,39 @@
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>🛤️ Маршрутная сеть</h2>
+        <div>
+            <a href="/create/create_route.php" class="btn btn-success">➕ Создать маршрут</a>
+            <a href="/" class="btn btn-outline-secondary">🏠 Меню</a>
+        </div>
+    </div>
+
+    <div class="card shadow-sm col-md-8 mx-auto">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th style="width: 80px;">ID</th>
+                    <th>Номер маршрута</th>
+                    <th class="text-end px-4">Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#routes}}
+                <tr>
+                    <td>{{route_id}}</td>
+                    <td><span class="badge bg-info text-dark fs-6">№ {{route_number}}</span></td>
+                    <td class="text-end px-4">
+                        <a href="/edit/edit_route.php?id={{route_id}}" 
+                           class="btn btn-sm btn-outline-warning me-1" title="Редактировать">✏️</a>
+                        
+                        <form action="/handlers/delete/delete_route.php" method="post" class="d-inline delete-form" 
+                              onsubmit="return confirm('Удалить маршрут целиком?');">
+                            <input type="hidden" name="route_id" value="{{route_id}}">
+                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Удалить">🗑️</button>
+                        </form>
+                    </td>
+                </tr>
+                {{/routes}}
+            </tbody>
+        </table>
+    </div>
+</div>
