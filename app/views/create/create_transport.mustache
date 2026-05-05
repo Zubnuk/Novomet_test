@@ -1,0 +1,80 @@
+<div class="container py-5">
+    <div class="card shadow border-0">
+        <div class="card-header bg-success text-white">
+            <h4 class="mb-0">➕ Регистрация нового транспорта</h4>
+        </div>
+        <div class="card-body p-4">
+            <!-- Убедись, что путь совпадает с расположением твоего save_transport.php -->
+            <form action="/handlers/save/save_transport.php" method="post" class="row g-3">
+                
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Госномер</label>
+                    <input type="text" name="plate_number" class="form-control" placeholder="А001АА 777" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Тип транспорта</label>
+                    <select name="type_id" class="form-select" required>
+                        <option value="" disabled selected>Выберите тип...</option>
+                        {{#types}}
+                        <option value="{{type_id}}">{{name}}</option>
+                        {{/types}}
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Модель</label>
+                    <input type="text" name="model" class="form-control" placeholder="Например: ЛиАЗ-5292">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Год выпуска</label>
+                    <input type="number" name="year" class="form-control" value="2024">
+                </div>
+
+        
+                <div class="col-12">
+                    <label class="form-label fw-bold">Описание / Примечания</label>
+                    <textarea name="description" class="form-control" rows="2" placeholder="Дополнительная информация о ТС"></textarea>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Состояние</label>
+                    <select name="condition" class="form-select" required>
+                        {{#conditions}}
+                        <option value="{{value}}">{{label}}</option>
+                        {{/conditions}}
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Назначить водителя</label>
+                    <select name="driver_id" class="form-select" required>
+                        
+                        <option value="" disabled selected>Без водителя</option>
+                        {{#drivers}}
+                        <option value="{{driver_id}}">{{full_name}}</option>
+                        {{/drivers}}
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Закрепить за маршрутом</label>
+                    <select name="route_id" class="form-select" required>
+                        
+                        <!--option value="" disabled selected>Вне маршрута</option-->
+                        <option label="Вне маршрута/"></option>
+                        {{#routes}}
+                        <option value="{{route_id}}">№ {{route_number}}</option>
+                        {{/routes}}
+                    </select>
+                </div>
+
+                <div class="col-12 mt-4 d-flex gap-2">
+                    <button type="submit" class="btn btn-success px-5">✅ Создать запись</button>
+                    <a href="/lists/transports.php" class="btn btn-outline-secondary">Отмена</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

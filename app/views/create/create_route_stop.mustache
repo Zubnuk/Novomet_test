@@ -1,0 +1,38 @@
+<div class="container py-5">
+    <div class="card shadow border-0 col-lg-8 mx-auto">
+        <div class="card-header bg-info text-dark">
+            <h4 class="mb-0">🔄 Привязка остановки к маршруту</h4>
+        </div>
+        <div class="card-body p-4">
+            <form action="/handlers/save/save_route_stop.php" method="post" class="row g-3">
+                <div class="col-md-12">
+                    <label class="form-label fw-bold">Выберите маршрут</label>
+                    <select name="route_id" class="form-select" required>
+                        {{#routes}}
+                        <option value="{{route_id}}">Маршрут № {{route_number}}</option>
+                        {{/routes}}
+                    </select>
+                </div>
+
+                <div class="col-md-8">
+                    <label class="form-label fw-bold">Выберите остановку</label>
+                    <select name="stop_id" class="form-select" required>
+                        {{#stops}}
+                        <option value="{{stop_id}}">{{name}}</option>
+                        {{/stops}}
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Порядок (номер)</label>
+                    <input type="number" name="stop_order" class="form-control" value="1" min="1" required>
+                </div>
+
+                <div class="col-12 mt-4 d-flex justify-content-between">
+                    <a href="/lists/route_stops.php" class="btn btn-outline-secondary">⬅️ Назад к схеме</a>
+                    <button type="submit" class="btn btn-primary px-5">➕ Добавить в маршрут</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
