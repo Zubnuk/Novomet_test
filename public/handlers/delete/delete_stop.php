@@ -20,7 +20,8 @@ try {
         ':stop_id' => $stopId
     ]);
 
-    echo 'Удалено';
+    header("Location: /index.php?success=updated");
+    exit;
 } catch (PDOException $e) {
     echo 'Ошибка: ' . $e->getMessage();
 }

@@ -20,7 +20,8 @@ try {
         ':type_id' => (int)$typeId
     ]);
 
-    echo 'Удалено';
+    header("Location: /index.php?success=updated");
+    exit;
 } catch (PDOException $e) {
     echo 'Ошибка: ' . $e->getMessage();
 }

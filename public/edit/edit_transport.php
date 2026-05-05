@@ -14,7 +14,7 @@ $transport = $stmt->fetch();
 
 if (!$transport) exit('Транспорт не найден');
 
-// Функция-помощник для разметки выбранных пунктов
+
 function markSelected($items, $key, $selectedValue) {
     return array_map(function($item) use ($key, $selectedValue) {
         $item['is_selected'] = ($item[$key] == $selectedValue);

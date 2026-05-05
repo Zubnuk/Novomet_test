@@ -20,7 +20,8 @@ try {
         ':driver_id' => $driverId
     ]);
 
-    echo 'Удалено';
+    header("Location: /index.php?success=updated");
+    exit;
 } catch (PDOException $e) {
     echo 'Ошибка: ' . $e->getMessage();
 }
