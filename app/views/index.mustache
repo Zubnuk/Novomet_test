@@ -1,147 +1,78 @@
-<div class="container pb-5">
-    <h1 class="mb-4 text-center">Управление справочниками</h1>
-
+<div class="container py-5">
+    <h1 class="text-center mb-5 fw-bold">🗺️ Система управления перевозками</h1>
+    
     <div class="row g-4">
-        <div class="col-md-6">
-            <div class="card h-100 shadow-sm">
-                <div class="card-header bg-secondary text-white">Добавить тип транспорта</div>
-                <div class="card-body">
-                    <form action="/handlers/save/save_type.php" method="post" class="d-flex gap-2">
-                        <input type="text" name="name" class="form-control" placeholder="Название (Трамвай, Автобус...)" required>
-                        <button type="submit" class="btn btn-success">OK</button>
-                    </form>
+        <!-- Справочник: Транспорт -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-primary">
+                <div class="card-body text-center">
+                    <div class="display-4 mb-2">🚌</div>
+                    <h4>Транспорт</h4>
+                    <p class="text-muted">Реестр подвижного состава, госномер и техсостояние</p>
+                    <a href="/lists/transports.php" class="btn btn-primary w-100 mt-auto">Открыть список</a>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="card h-100 shadow-sm">
-                <div class="card-header bg-secondary text-white">Добавить водителя</div>
-                <div class="card-body">
-                    <form action="/handlers/save/save_driver.php" method="post" class="d-flex gap-2">
-                        <input type="text" name="full_name" class="form-control" placeholder="ФИО водителя" required minlength="5">
-                        <button type="submit" class="btn btn-success">OK</button>
-                    </form>
+        <!-- Справочник: Водители -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-secondary">
+                <div class="card-body text-center">
+                    <div class="display-4 mb-2">👨‍✈️</div>
+                    <h4>Водители</h4>
+                    <p class="text-muted">Управление персоналом и контактные данные</p>
+                    <a href="/lists/drivers.php" class="btn btn-secondary w-100 mt-auto">Открыть список</a>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="card h-100 shadow-sm">
-                <div class="card-header bg-secondary text-white">Добавить остановку</div>
-                <div class="card-body">
-                    <form action="/handlers/save/save_stop.php" method="post" class="row g-2">
-                        <div class="col-12">
-                            <input type="text" name="name" class="form-control" placeholder="Название остановки" required>
-                        </div>
-                        <div class="col-6">
-                            <input type="number" name="latitude" class="form-control" step="0.000001" placeholder="Широта" required>
-                        </div>
-                        <div class="col-6">
-                            <input type="number" name="longitude" class="form-control" step="0.000001" placeholder="Долгота" required>
-                        </div>
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-success w-100">Сохранить остановку</button>
-                        </div>
-                    </form>
+        <!-- Справочник: Маршруты -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-success">
+                <div class="card-body text-center">
+                    <div class="display-4 mb-2">🛣️</div>
+                    <h4>Маршруты</h4>
+                    <p class="text-muted">Номера маршрутов и их основные параметры</p>
+                    <a href="/lists/routes.php" class="btn btn-success w-100 mt-auto">Открыть список</a>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="card h-100 shadow-sm">
-                <div class="card-header bg-secondary text-white">Добавить маршрут</div>
-                <div class="card-body">
-                    <form action="/handlers/save/save_route.php" method="post" class="d-flex gap-2">
-                        <input type="text" name="route_number" class="form-control" placeholder="Номер маршрута (напр. 10А)" required>
-                        <button type="submit" class="btn btn-success">OK</button>
-                    </form>
+        <!-- Справочник: Остановки -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-danger">
+                <div class="card-body text-center">
+                    <div class="display-4 mb-2">📍</div>
+                    <h4>Остановки</h4>
+                    <p class="text-muted">Геолокация и названия остановочных пунктов</p>
+                    <a href="/lists/stops.php" class="btn btn-danger w-100 mt-auto">Открыть список</a>
                 </div>
             </div>
         </div>
 
-        <div class="col-12">
-            <div class="card shadow-sm border-info">
-                <div class="card-header bg-info text-dark fw-bold">Добавить остановку в маршрут (Связь)</div>
-                <div class="card-body">
-                    <form action="/handlers/save/save_route_stop.php" method="post" class="row g-3">
-                        <div class="col-md-4">
-                            <label class="form-label">Маршрут</label>
-                            <select name="route_id" class="form-select" required>
-                                <option value="">-- выберите --</option>
-                                {{#routes}}
-                                <option value="{{route_id}}">{{route_number}}</option>
-                                {{/routes}}
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label">Остановка</label>
-                            <select name="stop_id" class="form-select" required>
-                                <option value="">-- выберите --</option>
-                                {{#stops}}
-                                <option value="{{stop_id}}">{{name}}</option>
-                                {{/stops}}
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <label class="form-label">Порядок</label>
-                            <input type="number" name="stop_order" class="form-control" min="1" required>
-                        </div>
-                        <div class="col-md-2 d-flex align-items-end">
-                            <button type="submit" class="btn btn-primary w-100">Связать</button>
-                        </div>
-                    </form>
+        <!-- Справочник: Виды транспорта -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-warning">
+                <div class="card-body text-center">
+                    <div class="display-4 mb-2">🏷️</div>
+                    <h4>Категории</h4>
+                    <p class="text-muted">Виды транспорта: автобусы, троллейбусы, трамваи</p>
+                    <a href="/lists/types.php" class="btn btn-warning w-100 mt-auto">Открыть список</a>
                 </div>
             </div>
         </div>
 
-        <div class="col-12">
-            <div class="card shadow-sm border-primary">
-                <div class="card-header bg-primary text-white fw-bold">Добавить транспортное средство</div>
-                <div class="card-body">
-                    <form action="/handlers/save/save_transport.php" method="post" class="row g-3">
-                        <div class="col-md-3">
-                            <label class="form-label">Тип</label>
-                            <select name="type_id" class="form-select" required>
-                                {{#types}}<option value="{{type_id}}">{{name}}</option>{{/types}}
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">Госномер</label>
-                            <input type="text" name="plate_number" class="form-control" required>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">Модель</label>
-                            <input type="text" name="model" class="form-control">
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">Год</label>
-                            <input type="number" name="year" class="form-control" min="1950" max="2100" required>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">Состояние</label>
-                            <select name="condition" class="form-select" required>
-                                {{#conditions}}<option value="{{value}}">{{label}}</option>{{/conditions}}
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">Водитель</label>
-                            <select name="driver_id" class="form-select" required>
-                                {{#drivers}}<option value="{{driver_id}}">{{full_name}}</option>{{/drivers}}
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">Маршрут</label>
-                            <select name="route_id" class="form-select" required>
-                                {{#routes}}<option value="{{route_id}}">{{route_number}}</option>{{/routes}}
-                            </select>
-                        </div>
-                        <div class="col-md-3 d-flex align-items-end">
-                            <button type="submit" class="btn btn-primary w-100">💾 Сохранить всё</button>
-                        </div>
-                    </form>
+        <!-- Справочник: Связи (Маршрут-Остановка) -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-info">
+                <div class="card-body text-center">
+                    <div class="display-4 mb-2">🔄</div>
+                    <h4>Схема движения</h4>
+                    <p class="text-muted">Привязка остановок к маршрутам и порядок следования</p>
+                    <a href="/lists/route_stops.php" class="btn btn-info w-100 mt-auto">Управление связями</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+  <!-- Заменить смайлики на картинки -->
