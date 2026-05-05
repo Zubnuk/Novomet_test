@@ -12,19 +12,19 @@ if (!$id) {
     exit('ID обязателен');
 }
 
-$sql = "
-UPDATE transport SET
-    plate_number = :plate_number,
-    model = :model,
-    description = :description,
-    year = :year,
-    `condition` = :condition,
-    type_id = :type_id,
-    route_id = :route_id,
-    driver_id = :driver_id
-WHERE transport_id = :id
-";
-
+$sql = 
+"UPDATE transport SET "
+    ."plate_number = :plate_number,"
+    ."model = :model,"
+    ."description = :description,"
+    ."year = :year,"
+    ."`condition` = :condition,"
+    ."type_id = :type_id,"
+    ."route_id = :route_id,"
+    ."driver_id = :driver_id"
+." WHERE transport_id = :id"
+;
+//TODO Сделать сохранение в одну строку . Везде сделать для отладки будущей
 try {
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
@@ -39,7 +39,7 @@ try {
         ':id' => (int)$id
     ]);
 
-    header("Location: /list.php?success=updated");
+    header("Location: /index.php?success=updated");
     exit;
 } catch (PDOException $e) {
     echo 'Ошибка: ' . $e->getMessage();

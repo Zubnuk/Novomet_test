@@ -22,7 +22,7 @@ try {
         ':name' => $name
     ]);
 
-    header("Location: /list.php?success=updated");
+    header("Location: /index.php?success=updated");
     exit;
 } catch (PDOException $e) {
     echo 'Ошибка: ' . $e->getMessage();

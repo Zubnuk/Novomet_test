@@ -10,9 +10,8 @@ $plateNumber = trim($_POST['plate_number'] ?? '');
 $typeId      = $_POST['type_id'] ?? null;
 $routeId     = $_POST['route_id'] ?? null;
 $driverId    = $_POST['driver_id'] ?? null;
-
-if ($plateNumber === '' || !$typeId || !$routeId || !$driverId) {
-    exit('Обязательные поля не заполнены');
+if ($plateNumber === '' || !$typeId) {
+    exit('Госномер и Тип транспорта  нужны!');
 }
 
 $sql = "
